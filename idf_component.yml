@@ -1,8 +1,10 @@
 ## IDF Component Manager Manifest File
 dependencies:
-  espressif/arduino-esp32:
-    version: idf-release/v5.1
-    git: https://github.com/espressif/arduino-esp32.git
+  # TODO: uncomment when the component "arduino-esp32" be
+  # officially updated to ESP-IDF v5.1.
+  # espressif/arduino-esp32:
+  #   version: idf-release/v5.1
+  #   git: https://github.com/espressif/arduino-esp32.git
   ## Required IDF version
   idf:
     version: ">=5.1.0"
