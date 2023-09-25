@@ -1657,7 +1657,11 @@ static bit_t processJoinAccept (void) {
 	    // TODO(tmm@mcci.com) regionalize
         // Lower DR every try below current UP DR
         // need to check feasibility? join feasability is default.
-        LMIC.datarate = lowerDR(LMIC.datarate, LMIC.rejoinCnt);
+
+        // !! Specific fix to AU915
+        if (LMIC.datarate > 2) {
+            LMIC.datarate = lowerDR(LMIC.datarate, LMIC.rejoinCnt);
+        }
 #else
         // in the join of AS923 v1.1 or older, only DR2 (SF10) is used.
         // TODO(tmm@mcci.com) if the rejoin logic is at all correct, we
@@ -2287,7 +2291,9 @@ static bit_t processDnData_norx(void) {
             LMIC.txCnt += 1;
             // becase txCnt was at least 1 when we entered this branch, this if() will be taken
             // for txCnt == 3, 5, 7.
-            if (LMIC.txCnt & 1) {
+
+            // !! Specific fix to AU915
+            if ((LMIC.txCnt & 1) && (LMIC.datarate > 2)) {
                 dr_t adjustedDR;
                 // lower DR
                 adjustedDR = decDR(LMIC.datarate);
